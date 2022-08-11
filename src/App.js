@@ -9,7 +9,7 @@ const App = () => {
     setTask(event.target.value);
   };
 
-  const taskAdd = (task) =>{
+  const taskAdd = (task) => {
     let allTasks = [...list]
     allTasks.push(task)
     addToList(allTasks)
@@ -18,14 +18,61 @@ const App = () => {
   }
 
   return (
-    <div>
-      <input type="text" id="newTask" name="newTask" onChange={handleChange} value={task}/>
+    <>
 
-      <h2>Task: {task}</h2>
-      <button onClick={()=> taskAdd(task)}>Save item</button>
-    </div>
+      <div className="wrapper">
+
+        <div className="newTask">
+          <div className="innerTask">
+            <h2>Add New Task:</h2>
+            <div className='inputwrapper'>
+            <input type="text" id="newTask" name="newTask" placeholder="Add New Task" onChange={handleChange} value={task} />
+            <button onClick={() => taskAdd(task)}>&nbsp;+&nbsp;</button>
+            </div>
+            <p>If I can I will add categories here for you to pick from</p>
+          </div>
+        </div>
+        <div className='container'>
+          <h1> Task List</h1>
+          <hr></hr>
+          <div className="taskList">
+          {list.map((aTask, index) => {
+        return (
+            <Tasks key={index} aTask={aTask} list={list} addToList={addToList} />
+        )
+          })}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
+
+const Tasks = (props) => {
+
+  const removeHandler=(index) =>{
+    let allTasks = [...props.list]
+    allTasks.splice(index,1)
+    props.addToList(allTasks)
+  }
+
+  const [done,setDone]=useState(false)
+
+  return (
+    <div>
+          <div className="taskCard">
+            { done ? (
+              <p className='doneItem'>{props.aTask}</p>
+            ) : (
+              <p>{props.aTask}</p>
+            )
+          }
+            <button onClick={()=>setDone(!done)} className="done">&#x2714;</button>
+            <button onClick={()=>removeHandler()} className="delete">X</button>
+          </div>
+    </div>
+  )
+}
 
 export default App;
 
