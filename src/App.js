@@ -1,3 +1,18 @@
+/* 
+//     #######################################
+//     #                                     #
+//     #           To Do List App            #
+//     #                                     #
+//     #######################################
+
+// ========================================================================================================
+
+// Task Manager App in React for CN Master 40
+// Features - add an item, remove an item, mark an item as done
+// To impliment in the future - categories, editing a task
+
+// ======================================================================================================== */
+
 import { useState } from 'react';
 import './App.css';
 
@@ -17,8 +32,7 @@ const App = () => {
 
   }
 
-  //if you delete from the top of the list, index is impacted. How can I make it so it hides item I just clicked, but doesn't impact index?
-
+// probably should make the input box its own component too
   return (
     <>
 
@@ -64,7 +78,7 @@ const Tasks = ( {aTask, list, addToList, item} ) => {
 
   return (
     <div>
-          <div className="taskCard" style={{display: del ? "none": "flex"}}>
+          <div className="taskCard" style={{display: del ? "none": "flex"}}> 
             { done ? (
               <p className='doneItem'>{aTask}</p>
             ) : (
@@ -77,6 +91,8 @@ const Tasks = ( {aTask, list, addToList, item} ) => {
     </div>
   )
 }
+
+// couldn't get removeHandlerfunc to work because of using index as the key - feel the rendering is cheating but couldn't work it out
 
 export default App;
 
