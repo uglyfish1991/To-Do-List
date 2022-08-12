@@ -17,6 +17,8 @@ const App = () => {
 
   }
 
+  //if you delete from the top of the list, index is impacted. How can I make it so it hides item I just clicked, but doesn't impact index?
+
   return (
     <>
 
@@ -29,7 +31,7 @@ const App = () => {
             <input type="text" id="newTask" name="newTask" placeholder="Add New Task" onChange={handleChange} value={task} />
             <button onClick={() => taskAdd(task)}>&nbsp;+&nbsp;</button>
             </div>
-            <p>If I can I will add categories here for you to pick from</p>
+            <p>Input a task to the list using the text field above</p>
           </div>
         </div>
         <div className='container'>
@@ -38,7 +40,7 @@ const App = () => {
           <div className="taskList">
           {list.map((aTask, index) => {
         return (
-            <Tasks key={index} aTask={aTask} list={list} addToList={addToList} />
+            <Tasks key={index} aTask={aTask} list={list} addToList={addToList} item={index}/>
         )
           })}
           </div>
@@ -48,27 +50,29 @@ const App = () => {
   );
 };
 
-const Tasks = (props) => {
+const Tasks = ( {aTask, list, addToList, item} ) => {
+  console.log(item)
 
-  const removeHandler=(index) =>{
-    let allTasks = [...props.list]
-    allTasks.splice(index,1)
-    props.addToList(allTasks)
-  }
+  // const removeHandler=(index) =>{
+  //   let allTasks = [...list]
+  //   allTasks.splice(index,1)
+  //   addToList(allTasks)
+  // }
 
   const [done,setDone]=useState(false)
+  const [del, setDel] = useState(false)
 
   return (
     <div>
-          <div className="taskCard">
+          <div className="taskCard" style={{display: del ? "none": "flex"}}>
             { done ? (
-              <p className='doneItem'>{props.aTask}</p>
+              <p className='doneItem'>{aTask}</p>
             ) : (
-              <p>{props.aTask}</p>
+              <p>{aTask}</p>
             )
           }
             <button onClick={()=>setDone(!done)} className="done">&#x2714;</button>
-            <button onClick={()=>removeHandler()} className="delete">X</button>
+            <button onClick={()=>setDel(!del)} className="delete">X</button>
           </div>
     </div>
   )
